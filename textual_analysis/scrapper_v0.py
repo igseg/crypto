@@ -14,6 +14,7 @@ from tools_scrapping import *
 
 
 url = 'https://www.coindesk.com/'
+max_time_running = 30
 
 starting_time = time.time()
 current_time  = time.time()
@@ -24,7 +25,7 @@ analyzed_links = set()
 
 non_analyzed_links.add(url)
 
-while non_analyzed_links != {} and time_elapsed < 30:
+while non_analyzed_links != {} and time_elapsed < max_time_running:
     
     local_url = non_analyzed_links.pop()
     response = requests.get(local_url)
