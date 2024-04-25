@@ -44,8 +44,8 @@ while non_analyzed_links != {} and time_elapsed < max_time_running:
     for link in links:
         if link in analyzed_links:
             continue
-        else:
-            non_analyzed_links.add(link)
+        elif url in link:
+            non_analyzed_links.add(link[:-1])
             
     del links
     
