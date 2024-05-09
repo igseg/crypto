@@ -14,15 +14,15 @@ from tools_scrapping import *
 
 
 url = 'https://www.coindesk.com/'
-max_time_running = 600
+max_time_running = 3600 * 3
 
 starting_time = time.time()
 current_time  = time.time()
 time_elapsed  = current_time - starting_time
 
-time_checks = 10
+time_checks = 3 * 6
 time_step   = max_time_running/time_checks
-step = 0
+step        = 0
 
 path_non_analyzed_links = 'non_analyzed_links.npy'
 path_analyzed_links     = 'analyzed_links.npy'
@@ -91,6 +91,8 @@ while non_analyzed_links != {} and time_elapsed < max_time_running:
 
     ## Save data
 
+    analyzed_links.add(local_url)
+
     local_url = local_url.replace('/','-')
     filename = f'Data/{local_url}.npy'
 
@@ -100,8 +102,6 @@ while non_analyzed_links != {} and time_elapsed < max_time_running:
     np.save(filename, visible_texts)
 
     ## updates for the next iteration
-    
-    analyzed_links.add(local_url)
 
     current_time  = time.time()
     time_elapsed  = current_time - starting_time
@@ -111,8 +111,8 @@ while non_analyzed_links != {} and time_elapsed < max_time_running:
         print(f"Number non analyzed documents: {len(non_analyzed_links)}")
         print(f"Number analyzed documents: {len(analyzed_links)}")
         print("="*70)
-        
-        save_links(non_analyzed_links, 
+
+        save_links(non_analyzed_links,
                    analyzed_links,
-                   path_non_analyzed_links = path_non_analyzed_links, 
+                   path_non_analyzed_links = path_non_analyzed_links,
                    path_analyzed_links = path_analyzed_links)

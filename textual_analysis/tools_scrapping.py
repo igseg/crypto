@@ -84,9 +84,9 @@ def load_links(path_non_analyzed_links = 'non_analyzed_links.npy', path_analyzed
     except FileNotFoundError:
         analyzed_links = np.array([], dtype=str)
 
-    return set(analyzed_links), set(non_analyzed_links)
+    return set(non_analyzed_links), set(analyzed_links)
 
 def save_links(non_analyzed_links, analyzed_links, path_non_analyzed_links = 'non_analyzed_links.npy', path_analyzed_links = 'analyzed_links.npy'):
-    np.save(path_non_analyzed_links, np.array(non_analyzed_links))
-    np.save(path_analyzed_links    , np.array(analyzed_links)    )
+    np.save(path_non_analyzed_links, np.array(list(non_analyzed_links)))
+    np.save(path_analyzed_links    , np.array(list(analyzed_links))    )
     return None
