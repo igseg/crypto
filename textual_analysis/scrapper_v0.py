@@ -24,8 +24,11 @@ time_checks = 10
 time_step   = max_time_running/time_checks
 step = 0
 
-non_analyzed_links = set()
-analyzed_links = set()
+path_non_analyzed_links = 'non_analyzed_links.npy'
+path_analyzed_links     = 'analyzed_links.npy'
+
+non_analyzed_links, analyzed_links = load_links(path_non_analyzed_links = path_non_analyzed_links,
+                                                path_analyzed_links     = path_analyzed_links     )
 
 non_analyzed_links.add(url)
 
@@ -108,3 +111,8 @@ while non_analyzed_links != {} and time_elapsed < max_time_running:
         print(f"Number non analyzed documents: {len(non_analyzed_links)}")
         print(f"Number analyzed documents: {len(analyzed_links)}")
         print("="*70)
+        
+        save_links(non_analyzed_links, 
+                   analyzed_links,
+                   path_non_analyzed_links = path_non_analyzed_links, 
+                   path_analyzed_links = path_analyzed_links)

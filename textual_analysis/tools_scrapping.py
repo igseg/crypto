@@ -61,14 +61,32 @@ def string_to_timestamp_coindesk(date_string):
     # Define format strings with and without milliseconds
     format_with_ms = '%Y-%m-%dT%H:%M:%S.%fZ'
     format_without_ms = '%Y-%m-%dT%H:%M:%SZ'
-    
+
     try:
         # Try parsing with milliseconds
         date_object = datetime.strptime(date_string, format_with_ms)
     except ValueError:
         # If milliseconds are not present, parse without milliseconds
         date_object = datetime.strptime(date_string, format_without_ms)
-        
+
     # Convert datetime object to timestamp
     timestamp = date_object.timestamp()
     return timestamp
+
+def load_links(path_non_analyzed_links = 'non_analyzed_links.npy', path_analyzed_links = 'analyzed_links.npy'):
+    try:
+        non_analyzed_links = np.load(path_non_analyzed_links)
+    except FileNotFoundError:
+        non_analyzed_links = np.array([], dtype=str)
+
+    try:
+        analyzed_links = np.load(path_analyzed_links)
+    except FileNotFoundError:
+        analyzed_links = np.array([], dtype=str)
+
+    return set(analyzed_links), set(non_analyzed_links)
+
+def save_links(non_analyzed_links, analyzed_links, path_non_analyzed_links = 'non_analyzed_links.npy', path_analyzed_links = 'analyzed_links.npy'):
+    np.save(path_non_analyzed_links, np.array(non_analyzed_links))
+    np.save(path_analyzed_links    , np.array(analyzed_links)    )
+    return None
